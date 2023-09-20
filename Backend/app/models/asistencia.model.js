@@ -8,9 +8,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
 
-        fecha: {
-            type : Sequelize.DATE(6) 
-        },
+        // fecha: { 
+        //     type : Sequelize.DATE(6) 
+        // },
 
     });
     return Asistencia;

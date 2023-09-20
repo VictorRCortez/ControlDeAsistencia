@@ -1,33 +1,143 @@
 const db = require("../models");
-const Tutorial = db.tutorials;
+const Asistencia = db.asistencias;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Tutorial
+// Create and Save a new Asistencia
 exports.create = (req, res) => {
-  
+    if (!req.body.nombre) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+        return;
+    }
+    //Create a asistencia
+    const asistencia = {
+        nombre: req.body.nombre,
+        nota: req.body.nota,
+        // fecha: req.body.fecha
+    };
+
+    // Save Tutorial in the database
+    Asistencia.create(asistencia)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the Asistencia."
+            });
+        });
 };
 
-// Retrieve all Tutorials from the database.
+// Retrieve all Asistencias from the database.
 exports.findAll = (req, res) => {
-  
+    const nombre = req.query.nombre;
+    var condiction = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
+
+    Asistencia.findAll({ where: condiction })
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "some error ocurred while retrieving asistencias. "
+            });
+        });
+
 };
 
-// Find a single Tutorial with an id
+// Find a single Asistencia with an id
 exports.findOne = (req, res) => {
-  
+    const id = req.params.id;
+
+    Asistencia.findByPk(id)
+        .then(data => {
+            if (data) {
+                res.send(data);
+            } else {
+                res.status(404).send({
+                    message: `Cannot find Tutorial with id=${id}.`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error retrieving Tutorial with id=" + id
+            });
+        });
 };
 
-// Update a Tutorial by the id in the request
+// Update a Asistencia by the id in the request
 exports.update = (req, res) => {
-  
+
+    const id = req.params.id;
+
+    Asistencia.update(req.body, {
+        where: { id: id }
+    })
+
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Asistencia was update successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update Asitencia whit id=${id}. Maybe Asistencia was not found or req.body is empty!`
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Error updating Asistencia whit id=" + id
+            });
+        });
+
 };
 
-// Delete a Tutorial with the specified id in the request
+// Delete a Asistencia with the specified id in the request
 exports.delete = (req, res) => {
-  
+
+    const id = req.params.id;
+
+    Asistencia.destroy({
+        where: { id: id }
+    })
+        .then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "Asistencia was deleted successfully!"
+                });
+            }
+            else {
+                res.send({
+                    message: `Cannot delete Asistencia with id=${id}. Maybe Asitencia was not found!`
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: "Could not delete Asistencia with id=" + id
+            });
+        });
 };
 
-// Delete all Tutorials from the database.
+// Delete all Asistencias from the database.
 exports.deleteAll = (req, res) => {
-  
+    Asistencia.destroy({
+        where: {},
+        truncate: false
+    })
+        .then(nums => {
+            res.send({ message: `${nums} Asitencia were deleted successfully! ` });
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error ocurred while removing all asistencias. "
+            });
+        });
+
 };
