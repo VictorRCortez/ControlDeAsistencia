@@ -21,5 +21,9 @@ module.exports = app => {
     // Delete all Asistencias
     router.delete("/", asistencias.deleteAll);
 
+    // //Retrieve all asistencias with id empleado
+    // router.get("/:id", asistencias.findAllByEmpleadoId);
+
+
     app.use('/api/asistencias', router);
 }

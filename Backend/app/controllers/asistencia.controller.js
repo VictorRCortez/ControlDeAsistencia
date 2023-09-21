@@ -1,10 +1,11 @@
 const db = require("../models");
 const Asistencia = db.asistencias;
+const Empleado = db.empleados
 const Op = db.Sequelize.Op;
 
 // Create and Save a new Asistencia
 exports.create = (req, res) => {
-    if (!req.body.nombre) {
+    if (!req.body.horaEntrada) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -12,8 +13,9 @@ exports.create = (req, res) => {
     }
     //Create a asistencia
     const asistencia = {
-        nombre: req.body.nombre,
-        nota: req.body.nota,
+        horaEntrada: req.body.horaEntrada,
+        horaSalida: req.body.horaSalida,
+        empleadoId: req.body.empleadoId
         // fecha: req.body.fecha
     };
 
@@ -32,8 +34,8 @@ exports.create = (req, res) => {
 
 // Retrieve all Asistencias from the database.
 exports.findAll = (req, res) => {
-    const nombre = req.query.nombre;
-    var condiction = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
+    const horaEntrada = req.query.horaEntrada;
+    var condiction = horaEntrada ? { horaEntrada: { [Op.like]: `%${horaEntrada}%` } } : null;
 
     Asistencia.findAll({ where: condiction })
         .then(data => {
@@ -139,5 +141,6 @@ exports.deleteAll = (req, res) => {
                     err.message || "Some error ocurred while removing all asistencias. "
             });
         });
+
 
 };

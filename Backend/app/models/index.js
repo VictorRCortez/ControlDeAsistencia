@@ -18,5 +18,9 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.asistencias = require("./asistencia.model.js")(sequelize, Sequelize);
-
+db.empleados = require("./empleado.model.js")(sequelize,Sequelize);
 module.exports = db;
+
+// Relacion entre empleado y asistencia (un empleado puede tener multiples asistencias)
+db.empleados.hasMany(db.asistencias);
+db.asistencias.belongsTo(db.empleados);

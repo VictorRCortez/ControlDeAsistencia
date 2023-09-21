@@ -1,16 +1,17 @@
 
 module.exports = (sequelize, Sequelize) => {
     const Asistencia = sequelize.define("asistencia", {
-        nombre: {
-            type: Sequelize.STRING
+        horaEntrada: {
+            type: Sequelize.TIME,
+            // allowNull: false,
+            // defaultValue: Sequelize.literal('CURRENT_TIME')
         },
-        nota: {
-            type: Sequelize.STRING
-        },
+        horaSalida: {
+            type: Sequelize.TIME,
+            // allowNull: false,
+            // defaultValue: Sequelize.literal('CURRENT_TIME')
+        }
 
-        // fecha: { 
-        //     type : Sequelize.DATE(6) 
-        // },
 
     });
     return Asistencia;
