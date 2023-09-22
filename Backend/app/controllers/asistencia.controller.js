@@ -9,20 +9,43 @@ exports.create = (req, res) => {
         res.status(400).send({
             message: "Content can not be empty!"
         });
+
+
         return;
     }
+
+        // // Verificar si el empleado llegó tarde o puntual
+        // const horaEntradaEmpleado = req.body.horaEntrada;
+        // const horaEntradaEsperada = '08:00:00';
+    
+        // let mensajeValidacion = "";
+    
+        // if (horaEntradaEmpleado > horaEntradaEsperada) {
+        //     mensajeValidacion = "El empleado llegó tarde";
+        // } else if (horaEntradaEmpleado === horaEntradaEsperada) {
+        //     mensajeValidacion = "El empleado llegó puntual";
+        // }
+    
+        // // Si hay un mensaje de validación, enviarlo como respuesta sin guardar en la base de datos
+        // if (mensajeValidacion !== "") {
+        //     res.status(400).send({ message: mensajeValidacion });
+        //     return;
+        // }
+
     //Create a asistencia
     const asistencia = {
         horaEntrada: req.body.horaEntrada,
         horaSalida: req.body.horaSalida,
         empleadoId: req.body.empleadoId
-        // fecha: req.body.fecha
+
     };
 
     // Save Tutorial in the database
     Asistencia.create(asistencia)
+
         .then(data => {
             res.send(data);
+
         })
         .catch(err => {
             res.status(500).send({
