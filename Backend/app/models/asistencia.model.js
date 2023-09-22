@@ -24,8 +24,10 @@ module.exports = (sequelize, Sequelize) => {
             // defaultValue: Sequelize.NOW,
             allowNull: false,
 
+        },
+        fecha: {
+            type: Sequelize.DATE(6)	
         }
-
 
     });
     return Asistencia;

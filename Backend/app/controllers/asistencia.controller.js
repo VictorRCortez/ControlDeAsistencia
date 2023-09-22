@@ -36,6 +36,7 @@ exports.create = (req, res) => {
     const asistencia = {
         horaEntrada: req.body.horaEntrada,
         horaSalida: req.body.horaSalida,
+        fecha: req.body.fecha,
         empleadoId: req.body.empleadoId
 
     };

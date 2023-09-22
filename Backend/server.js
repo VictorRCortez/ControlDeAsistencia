@@ -14,9 +14,9 @@ db.sequelize.sync()
         console.log("Failed to sync db: " + err.message);
     });
 
-// db.sequelize.sync({ force: true }).then(() => {
-//     console.log("Drop and Re-sync Db.");
-// })
+db.sequelize.sync({ alter: true }).then(() => {
+    console.log("Drop and sync Db.");
+})
 
 app.use(express.urlencoded({ extended: true }));
 
